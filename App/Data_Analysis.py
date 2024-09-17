@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from sklearn.preprocessing import StandardScaler
 
 def show_analysis():
     # Load the data
@@ -14,7 +15,7 @@ def show_analysis():
     st.subheader('Initial Data')
     st.write(df.head())  # Display the first few rows of raw data
 
-    # Data Cleaning (following the same steps you outlined)
+    # Data Cleaning (following the same steps)
     st.subheader('Data Cleaning')
     
     # Step 1: Drop unnecessary columns
@@ -35,6 +36,15 @@ def show_analysis():
     df['Embarked'] = df['Embarked'].map({'S': 0, 'C': 1, 'Q': 2})
 
     st.write('Data after cleaning:')
+    st.write(df.head())
+
+    # Step 5: Scaling numerical columns ('Age', 'Fare')
+    st.write('Applying StandardScaler to numerical columns (Age, Fare)...')
+    scaler = StandardScaler()
+    numerical_cols = ['Age', 'Fare']
+    df[numerical_cols] = scaler.fit_transform(df[numerical_cols])
+
+    st.write('Data after scaling:')
     st.write(df.head())
 
     # Visualizing correlations between variables
